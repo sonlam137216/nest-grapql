@@ -1,5 +1,5 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { AppController } from './app.controller';
@@ -9,6 +9,7 @@ import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ProductModule } from './modules/product/product.module';
 import { OrderModule } from './modules/order/order.module';
+import { REDIS_CACHE_OPTIONS } from './configs/redis.config';
 
 @Module({
   imports: [
@@ -22,6 +23,9 @@ import { OrderModule } from './modules/order/order.module';
     AuthModule,
     ProductModule,
     OrderModule,
+    CacheModule.register({
+      ...REDIS_CACHE_OPTIONS,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
