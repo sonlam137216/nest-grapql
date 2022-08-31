@@ -1,0 +1,136 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateOrderInput {
+  buyer: ID!
+  orderItems: [OrderItemInput!]!
+  shippingAddress: String!
+  status: OrderStatusEnum
+}
+
+input CreateProductInput {
+  manufacturer: String!
+  name: String!
+  price: Float!
+  quantity: Int!
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  username: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input FilterProduct {
+  manufacturer: String
+  name: String
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type LoginResponse {
+  accessToken: String
+  user: User
+}
+
+type Mutation {
+  createOrder(input: CreateOrderInput!): Order!
+  createProduct(input: CreateProductInput!): Product!
+  createUser(input: CreateUserInput!): User!
+  deleteOrder(id: String!): Boolean!
+  deleteProduct(id: String!): Boolean!
+  updateOrder(id: String!, input: UpdateOrderInput!): Order!
+  updateProduct(id: String!, input: UpdateProductInput!): Product!
+}
+
+type Order {
+  _id: String
+  buyer: User
+  createdAt: DateTime
+  orderItems: [OrderItem!]
+  shippingAddress: String
+  status: OrderStatusEnum
+  totalPrice: Float
+  updatedAt: DateTime
+}
+
+type OrderItem {
+  price: Float
+  product: Product
+  quantity: Int
+}
+
+input OrderItemInput {
+  product: ID!
+  quantity: Int!
+}
+
+type OrderResult {
+  results: [Order!]
+  totalCount: Int
+}
+
+enum OrderStatusEnum {
+  APPROVED
+  CANCELED
+  DELIVERING
+  DRAFT
+  PAID
+}
+
+type Product {
+  _id: String
+  createdAt: DateTime
+  manufacturer: String
+  name: String
+  price: Float
+  quantity: Int
+  updatedAt: DateTime
+}
+
+type ProductResult {
+  results: [Product!]
+  totalCount: Int
+}
+
+type Query {
+  getAll: String!
+  getAllOrderByUserId(id: String!): OrderResult!
+  getAllProduct(filter: FilterProduct, page: Int, size: Int): ProductResult!
+  getProductById(id: String!): Product!
+  getUserByEmail: User!
+  login(input: LoginInput!): LoginResponse!
+}
+
+input UpdateOrderInput {
+  buyer: ID!
+  orderItems: [OrderItemInput!]!
+  shippingAddress: String!
+  status: OrderStatusEnum
+  totalPrice: Float
+}
+
+input UpdateProductInput {
+  manufacturer: String!
+  name: String!
+  price: Float!
+  quantity: Int!
+}
+
+type User {
+  _id: String
+  createdAt: DateTime
+  email: String
+  password: String
+  updatedAt: DateTime
+  username: String
+}
