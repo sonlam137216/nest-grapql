@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, HideField } from '@nestjs/graphql';
 import { IUser } from '../interfaces/user';
 
 @ObjectType()
@@ -6,7 +6,7 @@ export class User implements IUser {
   @Field(() => String, { nullable: true })
   username: string;
 
-  @Field(() => String, { nullable: true })
+  @HideField()
   password: string;
 
   @Field(() => String, { nullable: true })

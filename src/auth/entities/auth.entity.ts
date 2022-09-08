@@ -8,7 +8,7 @@ export class Auth {
 }
 
 @ObjectType()
-export class LoginResponse {
+export class AuthenticationResponse {
   @Field(() => String, { nullable: true })
   accessToken: string;
 

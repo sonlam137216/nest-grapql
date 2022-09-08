@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AuthenticationResponse {
+  accessToken: String
+  user: User
+}
+
 input CreateOrderInput {
   buyer: ID!
   orderItems: [OrderItemInput!]!
@@ -17,6 +22,7 @@ input CreateProductInput {
 }
 
 input CreateUserInput {
+  confirmPassword: String!
   email: String!
   password: String!
   username: String!
@@ -37,17 +43,13 @@ input LoginInput {
   password: String!
 }
 
-type LoginResponse {
-  accessToken: String
-  user: User
-}
-
 type Mutation {
   createOrder(input: CreateOrderInput!): Order!
   createProduct(input: CreateProductInput!): Product!
   createUser(input: CreateUserInput!): User!
   deleteOrder(id: String!): Boolean!
   deleteProduct(id: String!): Boolean!
+  register(input: RegisterInput!): AuthenticationResponse!
   updateOrder(id: String!, input: UpdateOrderInput!): Order!
   updateProduct(id: String!, input: UpdateProductInput!): Product!
 }
@@ -108,7 +110,14 @@ type Query {
   getAllProduct(filter: FilterProduct, page: Int, size: Int): ProductResult!
   getProductById(id: String!): Product!
   getUserByEmail: User!
-  login(input: LoginInput!): LoginResponse!
+  login(input: LoginInput!): AuthenticationResponse!
+}
+
+input RegisterInput {
+  confirmPassword: String!
+  email: String!
+  password: String!
+  username: String!
 }
 
 input UpdateOrderInput {
@@ -130,7 +139,6 @@ type User {
   _id: String
   createdAt: DateTime
   email: String
-  password: String
   updatedAt: DateTime
   username: String
 }

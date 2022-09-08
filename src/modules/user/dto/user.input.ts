@@ -11,4 +11,7 @@ export class CreateUserInput implements Partial<IUser> {
 
   @Field(() => String)
   email: string;
+
+  @Field(() => String)
+  confirmPassword: string;
 }
