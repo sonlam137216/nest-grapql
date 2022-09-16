@@ -35,6 +35,15 @@ export class OrderService {
       throw new BadRequestException('Order items is empty');
     }
 
+    const productKey = 'product';
+    const productIds = this.getListId(input.orderItems, productKey);
+
+    await Promise.all[
+      productIds.map(async (id) => {
+        await this.productService.getById(id);
+      })
+    ];
+
     const totalPrice = await this.calPrice(input.orderItems);
 
     const order = new this.orderModel({ totalPrice, ...input });
@@ -68,5 +77,9 @@ export class OrderService {
     );
 
     return totalPrice;
+  }
+
+  getListId(arr, key) {
+    return arr.map((item) => item.key);
   }
 }
